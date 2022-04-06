@@ -1,0 +1,31 @@
+config:
+  node_agent: 'docker_compose'
+  deploy_template: '.sqa/docker-compose.yml'
+  credentials:
+      - id: orviz-github-basic
+        username_var: GIT_USER
+        password_var: GIT_PASSWORD
+      - id: samuel-im
+        variable: IM_AUTH_FILE
+
+sqa_criteria:
+  SvcQC.Dep:
+    repos:
+      im:
+        container: imclient
+        commands:
+          - |
+            #!/bin/bash
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /examples/test.radl | jq '[ .infid ]' | im_client.py destroy -
+          - |
+            #!/bin/bash
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /examples/tosca_create.yml | jq '[ .infid ]' | im_client.py destroy -
+
+#environment:
+  #JPL_DOCKERPUSH: "kubectl"
+  #JPL_IGNOREFAILURES: "defined"
+  #JPL_DOCKERFORCEBUILD: "enabled"
+  #JPL_WORKSPACEDEBUG: "true"
+  #JPL_WORKSPACEDEBUGTIMEOUT: 45
+
+#timeout: 1200
