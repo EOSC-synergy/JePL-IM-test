@@ -6,5 +6,5 @@ services:
     container_name: "imclient"
     hostname: "imclient"
     volumes:
-     - ./:/examples
+     - ./:/im
     entrypoint: [/bin/sleep, infinity]

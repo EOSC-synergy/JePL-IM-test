@@ -5,8 +5,14 @@ config:
       - id: orviz-github-basic
         username_var: GIT_USER
         password_var: GIT_PASSWORD
-      - id: samuel-im
-        variable: IM_AUTH_FILE
+      - id: incd_openstack
+        variable: OPENSTACK_URL
+      - id: incd_openstack_id
+        username_var: OPENSTACK_USER
+        password_var: OPENSTACK_PASS
+      - id: upv_im_id
+        username_var: IM_USER
+        password_var: IM_PASS
 
 sqa_criteria:
   SvcQC.Dep:
@@ -16,10 +22,13 @@ sqa_criteria:
         commands:
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /examples/test.radl | jq '[ .infid ]' | im_client.py destroy -
+            printf "$(cat /im/auth/auth.dat)" "${IM_USER}" "${IM_PASS}" incd "${OPENSTACK_URL}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default > ${IM_AUTH_FILE}
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /examples/tosca_create.yml | jq '[ .infid ]' | im_client.py destroy -
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl | jq '[ .infid ]' | im_client.py destroy -
+          - |
+            #!/bin/bash
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml | jq '[ .infid ]' | im_client.py destroy -
 
 #environment:
   #JPL_DOCKERPUSH: "kubectl"
@@ -27,5 +36,6 @@ sqa_criteria:
   #JPL_DOCKERFORCEBUILD: "enabled"
   #JPL_WORKSPACEDEBUG: "true"
   #JPL_WORKSPACEDEBUGTIMEOUT: 45
+  IM_AUTH_FILE: "/im/auth.dat"
 
 #timeout: 1200
