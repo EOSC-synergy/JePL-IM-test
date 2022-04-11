@@ -28,10 +28,10 @@ sqa_criteria:
             printf "$(cat /im/auth/auth.dat)" "${IM_USER}" "${IM_PASS}" incd "${OPENSTACK_URL}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default > ${IM_AUTH_FILE}
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl | jq '[ .infid ]' | im_client.py destroy
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl | jq '[ .infid ]' | im_client.py -a "${IM_AUTH_FILE}" destroy
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml | jq '[ .infid ]' | im_client.py destroy
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml | jq '[ .infid ]' | im_client.py -a "${IM_AUTH_FILE}" destroy
 
 environment:
   IM_AUTH_FILE: "/im/auth.dat"
