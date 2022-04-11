@@ -5,6 +5,9 @@ config:
       - id: orviz-github-basic
         username_var: GIT_USER
         password_var: GIT_PASSWORD
+      - id: samuel-dockerhub
+        username_var: JPL_DOCKERUSER
+        password_var: JPL_DOCKERPASS
       - id: incd_openstack
         variable: OPENSTACK_URL
       - id: incd_openstack_id
@@ -25,14 +28,14 @@ sqa_criteria:
             printf "$(cat /im/auth/auth.dat)" "${IM_USER}" "${IM_PASS}" incd "${OPENSTACK_URL}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default > ${IM_AUTH_FILE}
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl | jq '[ .infid ]' | im_client.py destroy -
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl | jq '[ .infid ]' | im_client.py destroy
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml | jq '[ .infid ]' | im_client.py destroy -
+            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml | jq '[ .infid ]' | im_client.py destroy
 
 environment:
   IM_AUTH_FILE: "/im/auth.dat"
-  #JPL_DOCKERPUSH: "kubectl"
+  JPL_DOCKERPUSH: "imclient"
   #JPL_IGNOREFAILURES: "defined"
   #JPL_DOCKERFORCEBUILD: "enabled"
   #JPL_WORKSPACEDEBUG: "true"
