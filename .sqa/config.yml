@@ -28,10 +28,34 @@ sqa_criteria:
             printf "$(cat /im/auth/auth.dat)" "${IM_USER}" "${IM_PASS}" incd "${OPENSTACK_URL}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default > ${IM_AUTH_FILE}
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl | jq '[ .infid ]' | im_client.py -a "${IM_AUTH_FILE}" destroy
+            im_client.py -r https://appsgrycap.i3m.upv.es:31443/im/ -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl > ./im_radl.json
+            RETURN_CODE=$?
+            echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
+            echo "Infrastructure Manager output:"
+            cat ./im_radl.json
+            if [ ${RETURN_CODE} -eq 0 ]; then
+              INFID=$(jq -r '[ .infid ] | .[]'  ./im_radl.json)
+              echo "INFID=${INFID}"
+              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
+              echo "im_client.py destroy return code: $?"
+            else
+              exit ${RETURN_CODE}
+            fi
           - |
             #!/bin/bash
-            im_client.py -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml | jq '[ .infid ]' | im_client.py -a "${IM_AUTH_FILE}" destroy
+            im_client.py -r https://appsgrycap.i3m.upv.es:31443/im/ -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml > ./im_tosca.json
+            RETURN_CODE=$?
+            echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
+            echo "Infrastructure Manager output:"
+            cat ./im_radl.json
+            if [ ${RETURN_CODE} -eq 0 ]; then
+              INFID=$(jq -r '[ .infid ] | .[]'  ./im_tosca.json)
+              echo "INFID=${INFID}"
+              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
+              echo "im_client.py destroy return code: $?"
+            else
+              exit ${RETURN_CODE}
+            fi
 
 environment:
   IM_AUTH_FILE: "/im/auth.dat"
