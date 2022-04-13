@@ -25,10 +25,12 @@ sqa_criteria:
         commands:
           - |
             #!/bin/bash
-            printf "$(cat /im/auth/auth.dat)" "${IM_USER}" "${IM_PASS}" incd "${OPENSTACK_URL}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default > ${IM_AUTH_FILE}
+            printf "$(cat /im/auth/auth.dat)" "${IM_USER}" "${IM_PASS}" incd "https://${OPENSTACK_URL}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default > ${IM_AUTH_FILE}
+            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > ./test.radl
+            cp ./test.radl /im/test.radl
           - |
             #!/bin/bash
-            im_client.py -r https://appsgrycap.i3m.upv.es:31443/im/ -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl > ./im_radl.json
+            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl > ./im_radl.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
             echo "Infrastructure Manager output:"
@@ -43,7 +45,7 @@ sqa_criteria:
             fi
           - |
             #!/bin/bash
-            im_client.py -r https://appsgrycap.i3m.upv.es:31443/im/ -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml > ./im_tosca.json
+            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml > ./im_tosca.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
             echo "Infrastructure Manager output:"
@@ -59,10 +61,13 @@ sqa_criteria:
 
 environment:
   IM_AUTH_FILE: "/im/auth.dat"
+  IM_IMAGE_ID: "4266a328-0c0e-4aa7-9087-b868882d39cb"
+  IM_SERVER: "https://appsgrycap.i3m.upv.es:31443/im/"
   JPL_DOCKERPUSH: "imclient"
   #JPL_IGNOREFAILURES: "defined"
   #JPL_DOCKERFORCEBUILD: "enabled"
   #JPL_WORKSPACEDEBUG: "true"
   #JPL_WORKSPACEDEBUGTIMEOUT: 45
 
+# Timeout after no activity in logs for this configuration (not the absolute duration)
 #timeout: 1200

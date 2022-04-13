@@ -4,6 +4,8 @@ services:
   imclient:
     environment:
      - IM_AUTH_FILE
+     - IM_IMAGE_ID
+     - IM_SERVER
     build:
       context: "."
       dockerfile: "./Dockerfile"
