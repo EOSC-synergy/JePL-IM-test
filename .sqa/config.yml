@@ -51,7 +51,7 @@ environment:
   JPL_DOCKERPUSH: "imclient"
   #JPL_IGNOREFAILURES: "defined"
   #JPL_DOCKERFORCEBUILD: "enabled"
-  #JPL_WORKSPACEDEBUG: "true"
+  JPL_WORKSPACEDEBUG: "true"
   #JPL_WORKSPACEDEBUGTIMEOUT: 45
 
 # Timeout after no activity in logs for this configuration (not the absolute duration)
