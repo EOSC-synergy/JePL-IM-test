@@ -19,7 +19,7 @@ sqa_criteria:
         commands:
           - |
             #!/bin/bash
-            printf "$(cat test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > ./test-ost.radl
+            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > /im/test-ost.radl
             im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test-ost.radl > ./im_radl.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
