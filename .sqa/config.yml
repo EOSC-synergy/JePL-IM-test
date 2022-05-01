@@ -16,7 +16,7 @@ sqa_criteria:
         container: imclient
         commands:
           - |
-            #!/bin/bash
+            #!/bin/sh
             im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl > ./im_radl.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
