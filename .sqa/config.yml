@@ -5,6 +5,8 @@ config:
       - id: orviz-github-basic
         username_var: GIT_USER
         password_var: GIT_PASSWORD
+      - id: incd_openstack
+        variable: OPENSTACK_URL
       - id: incd-auth.dat
         type: file
         variable: JENKINS_AUTH_FILE
@@ -17,7 +19,8 @@ sqa_criteria:
         commands:
           - |
             #!/bin/bash
-            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test.radl > ./im_radl.json
+            printf "$(cat test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > ./test-ost.radl
+            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test-ost.radl > ./im_radl.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
             echo "Infrastructure Manager output:"
@@ -47,7 +50,7 @@ sqa_criteria:
             fi
 
 environment:
-  IM_IMAGE_ID: "4266a328-0c0e-4aa7-9087-b868882d39cb"
+  IM_IMAGE_ID: "5336f60b-d4cc-4285-a573-1b706cbbe40b"
   IM_SERVER: "https://appsgrycap.i3m.upv.es:31443/im/"
   IM_AUTH_FILE: '/im/auth/auth.dat'
   JPL_DOCKERPUSH: "imclient"
