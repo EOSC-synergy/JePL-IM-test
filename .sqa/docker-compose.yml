@@ -3,7 +3,7 @@ version: "3.7"
 services:
   imclient:
     environment:
-     - IM_AUTH_FILE='/im/auth/auth.dat'
+     - IM_AUTH_FILE
      - IM_IMAGE_ID
      - IM_SERVER
     build:
@@ -14,5 +14,5 @@ services:
     hostname: "imclient"
     volumes:
      - ./:/im
-     - ${IM_AUTH_FILE}:/im/auth/auth.dat
+     - ${JENKINS_AUTH_FILE}:${IM_AUTH_FILE}
     entrypoint: [/bin/sleep, infinity]

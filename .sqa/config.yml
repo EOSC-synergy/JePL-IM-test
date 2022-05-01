@@ -7,7 +7,7 @@ config:
         password_var: GIT_PASSWORD
       - id: incd-auth.dat
         type: file
-        variable: IM_AUTH_FILE
+        variable: JENKINS_AUTH_FILE
 
 sqa_criteria:
   SvcQC.Dep:
@@ -49,6 +49,7 @@ sqa_criteria:
 environment:
   IM_IMAGE_ID: "4266a328-0c0e-4aa7-9087-b868882d39cb"
   IM_SERVER: "https://appsgrycap.i3m.upv.es:31443/im/"
+  IM_AUTH_FILE: '/im/auth/auth.dat'
   JPL_DOCKERPUSH: "imclient"
   #JPL_IGNOREFAILURES: "defined"
   #JPL_DOCKERFORCEBUILD: "enabled"
