@@ -6,6 +6,7 @@ config:
         username_var: GIT_USER
         password_var: GIT_PASSWORD
       - id: incd-auth.dat
+        type: file
         variable: IM_AUTH_FILE
 
 sqa_criteria:
@@ -53,7 +54,7 @@ environment:
   #JPL_DOCKERFORCEBUILD: "enabled"
   #JPL_WORKSPACEDEBUG: "true"
   #JPL_WORKSPACEDEBUGTIMEOUT: 45
-  JPL_DEBUG: "true"
+  #JPL_DEBUG: "true"
 
 # Timeout after no activity in logs for this configuration (not the absolute duration)
 #timeout: 1200
