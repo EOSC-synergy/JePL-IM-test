@@ -7,8 +7,8 @@ services:
      - IM_IMAGE_ID
      - IM_SERVER
     build:
-     - context: "."
-     - dockerfile: "./Dockerfile"
+      context: "."
+      dockerfile: "./Dockerfile"
     image: "eoscsynergy/im-client:1.5.9"
     container_name: "imclient"
     hostname: "imclient"
