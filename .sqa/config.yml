@@ -19,7 +19,7 @@ sqa_criteria:
         commands:
           - |
             #!/bin/bash
-            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > /im/test-ost.radl
+            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}:{OPENSTACK_ID_PORT}" "${IM_IMAGE_ID}" > /im/test-ost.radl
             im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test-ost.radl > ./im_radl.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
@@ -52,6 +52,7 @@ sqa_criteria:
 environment:
   IM_IMAGE_ID: "5336f60b-d4cc-4285-a573-1b706cbbe40b"
   IM_SERVER: "https://appsgrycap.i3m.upv.es:31443/im/"
+  OPENSTACK_ID_PORT: "5000"
   IM_AUTH_FILE: '/im/auth/auth.dat'
   JPL_DOCKERPUSH: "imclient"
   #JPL_IGNOREFAILURES: "defined"
