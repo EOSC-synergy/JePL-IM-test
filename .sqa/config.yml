@@ -30,9 +30,13 @@ sqa_criteria:
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
             echo "Infrastructure Manager output:"
             cat ./im_radl.json
-            if [ ${RETURN_CODE} -eq 0 ]; then
-              INFID=$(jq -r '[ .infid ] | .[]'  ./im_radl.json)
-              echo "INFID=${INFID}"
+            INFID=$(jq -r '[ .infid ] | .[]'  ./im_radl.json)
+            echo "INFID=${INFID}"
+            if [ ${RETURN_CODE} -eq 0 -a ! -z "${INFID}" ]; then
+              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
+              echo "im_client.py destroy return code: $?"
+            elif [ ! -z "${INFID}" ]; then
+              # TODO: print logs
               im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
               echo "im_client.py destroy return code: $?"
             else
@@ -45,12 +49,16 @@ sqa_criteria:
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
             echo "Infrastructure Manager output:"
             cat ./im_radl.json
-            if [ ${RETURN_CODE} -eq 0 ]; then
-              INFID=$(jq -r '[ .infid ] | .[]'  ./im_tosca.json)
-              echo "INFID=${INFID}"
+            INFID=$(jq -r '[ .infid ] | .[]'  ./im_tosca.json)
+            echo "INFID=${INFID}"
+            if [ ${RETURN_CODE} -eq 0 -a ! -z "${INFID}" ]; then
               im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
               echo "im_client.py destroy return code: $?"
-            else
+            elif [ ! -z "${INFID}" ]; then
+              # TODO: print logs
+              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
+              echo "im_client.py destroy return code: $?"
+            else 
               exit ${RETURN_CODE}
             fi
 
