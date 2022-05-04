@@ -19,6 +19,8 @@ sqa_criteria:
         commands:
           - |
             #!/bin/bash
+            echo "Check auth.dat file:"
+            ls -al "${IM_AUTH_FILE}"
             printf "$(cat /im/test.radl)" "${OPENSTACK_URL}:${OPENSTACK_ID_PORT}" "${IM_IMAGE_ID}" > /im/test-ost.radl
             im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test-ost.radl > ./im_radl.json
             RETURN_CODE=$?
