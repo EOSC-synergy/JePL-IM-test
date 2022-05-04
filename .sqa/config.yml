@@ -21,7 +21,7 @@ sqa_criteria:
             #!/bin/bash
             echo "Check auth.dat file:"
             ls -al "${IM_AUTH_FILE}"
-            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}:${OPENSTACK_ID_PORT}" "${IM_IMAGE_ID}" > /im/test-ost.radl
+            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > /im/test-ost.radl
             echo "Printing radl file"
             cat /im/test-ost.radl
             echo
