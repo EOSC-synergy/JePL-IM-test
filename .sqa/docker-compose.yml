@@ -6,7 +6,10 @@ services:
      - IM_AUTH_FILE
      - IM_IMAGE_ID
      - IM_SERVER
-    image: "grycap/im-client:ec3"
+    build:
+      context: "."
+      dockerfile: "./Dockerfile"
+    image: "eoscsynergy/im-client:1.5.9"
     container_name: "imclient"
     hostname: "imclient"
     volumes:
