@@ -32,21 +32,23 @@ sqa_criteria:
 #            cat ./im_radl.json
 #            INFID=$(jq -r '[ .infid ] | .[]' ./im_radl.json)
 #            echo "INFID=${INFID}"
-#            if [ ${RETURN_CODE} -eq 0 -a ! -z "${INFID}" ]; then
+#            if [ ${RETURN_CODE} -eq 0 ] && [[ ! -z "${INFID}" ]]; then
 #              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
 #              echo "im_client.py destroy return code: $?"
-#            elif [ ! -z "${INFID}" ]; then
+#            elif [[ ! -z "${INFID}" ]]; then
 #              echo "Deployment failed. Logs:"
 #              im_client.py getcontmsg ${INFID}
 #              echo 
 #              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
 #              echo "im_client.py destroy return code: $?"
+#              exit ${RETURN_CODE}
 #            else
 #              exit ${RETURN_CODE}
 #            fi
           - |
             #!/bin/bash
-            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml > ./im_tosca.json
+            printf "$(cat /im/tosca_create.yml)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > /im/tosca_create_with_image.yml
+            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create_with_image.yml > ./im_tosca.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
             echo "Infrastructure Manager output:"
@@ -54,15 +56,16 @@ sqa_criteria:
             echo 
             INFID=$(jq -r '[ .infid ] | .[]' ./im_tosca.json)
             echo "INFID=${INFID}"
-            if [ ${RETURN_CODE} -eq 0 -a ! -z "${INFID}" ]; then
+            if [ ${RETURN_CODE} -eq 0 ] && [[ ! -z "${INFID}" ]]; then
               im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
               echo "im_client.py destroy return code: $?"
-            elif [ ! -z "${INFID}" ]; then
+            elif [[ ! -z "${INFID}" ]]; then
               echo "Deployment failed. Logs:"
               im_client.py getcontmsg ${INFID}
               echo 
               im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
               echo "im_client.py destroy return code: $?"
+              exit ${RETURN_CODE}
             else 
               exit ${RETURN_CODE}
             fi

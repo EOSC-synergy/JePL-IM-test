@@ -59,6 +59,7 @@ topology_template:
             type: linux
             distribution: ubuntu
             version: 18.04
+            image: ost://%s/%s
 
     test_db:
       type: tosca.nodes.indigo.Database.MySQL
@@ -104,6 +105,7 @@ topology_template:
            type: linux
            distribution: ubuntu
            version: 18.04
+           image: ost://%s/%s
 
   outputs:
     server_url:
