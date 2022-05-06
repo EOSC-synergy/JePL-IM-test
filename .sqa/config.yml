@@ -33,12 +33,12 @@ sqa_criteria:
 #            sed -i 1,1d ./im_radl.json
 #            INFID=$(jq -r '[ .infid ] | .[]' ./im_radl.json)
 #            echo "INFID=${INFID}"
-#            if [ ${RETURN_CODE} -eq 0 ] && [[ ! -z "${INFID}" ]]; then
+#            if [ ${RETURN_CODE} -eq 0 ] && ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
 #              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
 #              echo "im_client.py destroy return code: $?"
-#            elif [[ ! -z "${INFID}" ]]; then
+#            elif ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
 #              echo "Deployment failed. Logs:"
-#              im_client.py getcontmsg ${INFID}
+#              im_client.py -a "${IM_AUTH_FILE}" getcontmsg ${INFID}
 #              echo 
 #              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
 #              echo "im_client.py destroy return code: $?"
@@ -61,12 +61,12 @@ sqa_criteria:
             sed -i 1,1d ./im_tosca.json
             INFID=$(jq -r '[ .infid ] | .[]' ./im_tosca.json)
             echo "INFID=${INFID}"
-            if [ ${RETURN_CODE} -eq 0 ] && [[ ! -z "${INFID}" ]]; then
+            if [ ${RETURN_CODE} -eq 0 ] && ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
               im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
               echo "im_client.py destroy return code: $?"
-            elif [[ ! -z "${INFID}" ]]; then
+            elif ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
               echo "Deployment failed. Logs:"
-              im_client.py getcontmsg ${INFID}
+              im_client.py -a "${IM_AUTH_FILE}" getcontmsg ${INFID}
               echo 
               im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
               echo "im_client.py destroy return code: $?"
