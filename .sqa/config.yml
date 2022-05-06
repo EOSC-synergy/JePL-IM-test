@@ -17,40 +17,40 @@ sqa_criteria:
       im:
         container: imclient
         commands:
-          - |
-            #!/bin/bash
-            echo "Check auth.dat file:"
-            ls -al "${IM_AUTH_FILE}"
-            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > /im/test-ost.radl
-            echo "Printing radl file"
-            cat /im/test-ost.radl
-            echo 
-            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test-ost.radl > ./im_radl.json
-            RETURN_CODE=$?
-            echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
-            echo "Infrastructure Manager output:"
-            cat ./im_radl.json
-            INFID=$(jq -r '[ .infid ] | .[]' ./im_radl.json)
-            echo "INFID=${INFID}"
-            if [ ${RETURN_CODE} -eq 0 -a ! -z "${INFID}" ]; then
-              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
-              echo "im_client.py destroy return code: $?"
-            elif [ ! -z "${INFID}" ]; then
-              echo "Deployment failed. Logs:"
-              im_client.py getcontmsg ${INFID}
-              echo 
-              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
-              echo "im_client.py destroy return code: $?"
-            else
-              exit ${RETURN_CODE}
-            fi
+#          - |
+#            #!/bin/bash
+#            echo "Check auth.dat file:"
+#            ls -al "${IM_AUTH_FILE}"
+#            printf "$(cat /im/test.radl)" "${OPENSTACK_URL}" "${IM_IMAGE_ID}" > /im/test-ost.radl
+#            echo "Printing radl file"
+#            cat /im/test-ost.radl
+#            echo 
+#            im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/test-ost.radl > ./im_radl.json
+#            RETURN_CODE=$?
+#            echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
+#            echo "Infrastructure Manager output:"
+#            cat ./im_radl.json
+#            INFID=$(jq -r '[ .infid ] | .[]' ./im_radl.json)
+#            echo "INFID=${INFID}"
+#            if [ ${RETURN_CODE} -eq 0 -a ! -z "${INFID}" ]; then
+#              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
+#              echo "im_client.py destroy return code: $?"
+#            elif [ ! -z "${INFID}" ]; then
+#              echo "Deployment failed. Logs:"
+#              im_client.py getcontmsg ${INFID}
+#              echo 
+#              im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
+#              echo "im_client.py destroy return code: $?"
+#            else
+#              exit ${RETURN_CODE}
+#            fi
           - |
             #!/bin/bash
             im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" create_wait_outputs /im/tosca_create.yml > ./im_tosca.json
             RETURN_CODE=$?
             echo "im_client.py create_wait_outputs return code: ${RETURN_CODE}"
             echo "Infrastructure Manager output:"
-            cat ./im_radl.json
+            cat ./im_tosca.json
             echo 
             INFID=$(jq -r '[ .infid ] | .[]' ./im_tosca.json)
             echo "INFID=${INFID}"
