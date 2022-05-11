@@ -58,7 +58,7 @@ sqa_criteria:
             echo "Infrastructure Manager output:"
             cat ./im_tosca.json
             echo 
-            awk '/\{/,/\}/ { print $1 }' ./im_tosca.json > ./im_tosca_aux.json
+            awk "/\{/,/\}/ { print $1 }" ./im_tosca.json > ./im_tosca_aux.json
             echo "Infrastructure Manager output (only json part):"
             cat ./im_tosca_aux.json
             echo 
