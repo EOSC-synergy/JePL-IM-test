@@ -68,6 +68,9 @@ sqa_criteria:
             INFID=$(jq -r '[ .infid ] | .[]' ./im_tosca_aux.json)
             echo "INFID=${INFID}"
             if [ ${RETURN_CODE} -eq 0 ] && ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
+              echo "Deployment finished with success. Logs:"
+              im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" getcontmsg ${INFID}
+              echo 
               im_client.py -r "${IM_SERVER}" -a "${IM_AUTH_FILE}" destroy ${INFID}
               echo "im_client.py destroy return code: $?"
             elif ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
@@ -87,7 +90,7 @@ environment:
   IM_SERVER: "https://appsgrycap.i3m.upv.es:31443/im/"
   OPENSTACK_ID_PORT: "5000"
   IM_AUTH_FILE: '/im/auth/auth.dat'
-  JPL_DOCKERPUSH: "imclient"
+  #JPL_DOCKERPUSH: "imclient"
   #JPL_IGNOREFAILURES: "defined"
   #JPL_DOCKERFORCEBUILD: "enabled"
   #JPL_WORKSPACEDEBUG: "true"
