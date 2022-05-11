@@ -31,6 +31,9 @@ sqa_criteria:
             echo "Infrastructure Manager output:"
             cat ./im_radl.json
             awk "/\{/,/\}/ { print $1 }" ./im_radl.json > ./im_radl_aux.json
+            echo "Infrastructure Manager output (only json part):"
+            cat ./im_radl_aux.json
+            echo 
             INFID=$(jq -r '[ .infid ] | .[]' ./im_radl_aux.json)
             echo "INFID=${INFID}"
             if [ ${RETURN_CODE} -eq 0 ] && ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
