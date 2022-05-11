@@ -5,6 +5,11 @@ def projectConfig
 pipeline {
     agent any
 
+    options {
+        lock('jepl-im-test')
+        throttle(['StandaloneByNode'])
+    }
+
     stages {
         stage('SQA baseline dynamic stages: wordpress') {
             steps {
