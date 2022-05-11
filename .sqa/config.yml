@@ -62,8 +62,7 @@ sqa_criteria:
             echo "Infrastructure Manager output (only json part):"
             cat ./im_tosca_aux.json
             echo 
-            mv ./im_tosca_aux.json ./im_tosca.json
-            INFID=$(jq -r '[ .infid ] | .[]' ./im_tosca.json)
+            INFID=$(jq -r '[ .infid ] | .[]' ./im_tosca_aux.json)
             echo "INFID=${INFID}"
             if [ ${RETURN_CODE} -eq 0 ] && ! [[ -z "${INFID}" && "x${INFID}x" == "xnullx" ]]; then
               im_client.py -a "${IM_AUTH_FILE}" destroy ${INFID}
