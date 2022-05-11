@@ -101,4 +101,4 @@ environment:
   #JPL_DEBUG: "true"
 
 # Timeout after no activity in logs for this configuration (not the absolute duration)
-#timeout: 1200
+timeout: 30
