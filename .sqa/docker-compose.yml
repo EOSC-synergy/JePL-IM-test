@@ -12,10 +12,11 @@ services:
      - OPENSTACK_PASS
      - IM_USER
      - IM_PASS
+     - OPENSTACK_ID_PORT
     image: "grycap/im-client:ec3"
     container_name: "imclient"
     hostname: "imclient"
     volumes:
      - ./:/im
-     - ${IM_AUTH_FILE}:${IM_AUTH_FILE}
+     - ./auth/auth.dat:${IM_AUTH_FILE}
     entrypoint: [/bin/sleep, infinity]
