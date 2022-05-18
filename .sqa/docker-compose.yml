@@ -4,8 +4,6 @@ services:
   imclient:
     environment:
      - IM_AUTH_FILE
-     - RADL_IMAGE_ID
-     - TOSCA_IMAGE_ID
      - IM_SERVER
      - OPENSTACK_URL
      - OPENSTACK_USER
