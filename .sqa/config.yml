@@ -22,7 +22,8 @@ sqa_criteria:
         commands:
           - |
             #!/bin/bash
-            printf "$(cat ${IM_AUTH_FILE})" "${IM_USER}" "${IM_PASS}" ifca "https://${OPENSTACK_URL}:${OPENSTACK_ID_PORT}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" "VO:eosc-synergy.eu" "0432c17d955e4c8d8ab7db0384536d4e" "IFCA" "3.x_password" > ${IM_AUTH_FILE}
+            # printf "$(cat ${IM_AUTH_FILE})" "${IM_USER}" "${IM_PASS}" ifca "https://${OPENSTACK_URL}:${OPENSTACK_ID_PORT}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" "VO:eosc-synergy.eu" "0432c17d955e4c8d8ab7db0384536d4e" "IFCA" "3.x_password" > ${IM_AUTH_FILE}
+            printf "$(cat ${IM_AUTH_FILE})" "${IM_USER}" "${IM_PASS}" ifca "https://api.cloud.ifca.es:5000" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" "VO:eosc-synergy.eu" "0432c17d955e4c8d8ab7db0384536d4e" "IFCA" "3.x_password" > ${IM_AUTH_FILE}
             echo "Generated auth.dat file:"
             ls -l ${IM_AUTH_FILE}
             cat ${IM_AUTH_FILE}
