@@ -98,8 +98,10 @@ sqa_criteria:
             fi
 
 environment:
-  RADL_IMAGE_ID: "5336f60b-d4cc-4285-a573-1b706cbbe40b"
-  TOSCA_IMAGE_ID: "97624935-200f-4670-9ea8-c65282adbe56"
+  # RADL_IMAGE_ID: "5336f60b-d4cc-4285-a573-1b706cbbe40b"
+  RADL_IMAGE_ID: "5de68512-71da-43d6-b1f6-5d54aedd9e2b"
+  # TOSCA_IMAGE_ID: "97624935-200f-4670-9ea8-c65282adbe56"
+  TOSCA_IMAGE_ID: "5de68512-71da-43d6-b1f6-5d54aedd9e2b"
   IM_SERVER: "https://appsgrycap.i3m.upv.es:31443/im/"
   OPENSTACK_ID_PORT: "5000"
   IM_AUTH_FILE: '/im/auth/auth.dat'
