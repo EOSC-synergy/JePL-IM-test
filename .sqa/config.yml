@@ -23,10 +23,11 @@ sqa_criteria:
           - |
             #!/bin/bash
             # InfrastructureManager auth and OpenStack site using standard user, password, tenant format
-            printf "$(cat ${IM_AUTH_FILE})" "${IM_USER}" "${IM_PASS}" incd "https://${OPENSTACK_URL}:${OPENSTACK_ID_PORT}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default 3.x_password > ${IM_AUTH_FILE}
+            printf "$(cat ${IM_AUTH_FILE})\n" "${IM_USER}" "${IM_PASS}" incd "https://${OPENSTACK_URL}:${OPENSTACK_ID_PORT}" "${OPENSTACK_USER}" "${OPENSTACK_PASS}" eosc-synergy default 3.x_password > ${IM_AUTH_FILE}
             echo "Generated auth.dat file:"
             ls -l ${IM_AUTH_FILE}
-            Check auth.dat file content:
+            # Check auth.dat file content:
+            echo "InfrastructureManager and Openstack auth"
             cat ${IM_AUTH_FILE}
             printf "$(cat /im/test.radl)" "${OPENSTACK_URL}" "${RADL_IMAGE_ID}" > /im/test-ost.radl
             echo "Printing radl file"
